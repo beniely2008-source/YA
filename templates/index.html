@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question importante...</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fdf2f2; /* Rose très pâle */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transition: all 0.3s ease;
+        }
+
+        img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #d32f2f;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            min-height: 100px; /* Espace pour le bouton qui grossit */
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #yesBtn {
+            background-color: #4caf50;
+            color: white;
+            z-index: 999;
+        }
+
+        #noBtn {
+            background-color: #f44336;
+            color: white;
+            position: relative;
+        }
+
+        .message-p {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 10px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="mainCard">
+        <img id="minionImg" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJndnBqZ3BqZ3BqZ3BqZ3BqZ3BqZ3BqZ3BqZ3BqZ3BqZ3BqJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/OPU6wUKARAyRUIAWIK/giphy.gif" alt="Minion">
+        <h1 id="mainTitle">Veux-tu être ma Valentine ?</h1>
+        
+        <p id="subMessage" class="message-p"></p>
+
+        <div class="btn-container">
+            <button id="yesBtn" onclick="celebrate()">Oui</button>
+            <button id="noBtn" onmouseover="dodgeButton()" onclick="dodgeButton()">Non</button>
+        </div>
+    </div>
+
+    <script>
+        let scaleFactor = 1;
+        const noMessages = [
+            "Tu es sûre ?",
+            "Vraiment ?",
+            "Réfléchis encore...",
+            "Allez, dis oui !",
+            "Tu me brises le coeur :(",
+            "Dernière chance !"
+        ];
+        let msgIndex = 0;
+
+        function dodgeButton() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const subMessage = document.getElementById('subMessage');
+
+            // 1. On déplace le bouton "Non" aléatoirement
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+
+            // 2. On fait grossir le bouton "Oui"
+            scaleFactor += 0.4;
+            yesBtn.style.transform = `scale(${scaleFactor})`;
+
+            // 3. On change le petit texte
+            subMessage.innerText = noMessages[msgIndex];
+            msgIndex = (msgIndex + 1) % noMessages.length;
+        }
+
+        function celebrate() {
+            const card = document.getElementById('mainCard');
+            card.innerHTML = `
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHR4M3J0Z3R0Z3R0Z3R0Z3R0Z3R0Z3R0Z3R0Z3R0Z3R0JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lTfuxVpBfXU704/giphy.gif" style="width:100%">
+                <h1 style="font-size: 2.5rem;">YAYYYY ! ❤️</h1>
+                <p>C'était écrit dans les étoiles !</p>
+            `;
+        }
+    </script>
+</body>
+</html>
